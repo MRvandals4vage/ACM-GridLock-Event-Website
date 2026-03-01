@@ -52,11 +52,18 @@ const IntroSequence: React.FC<IntroSequenceProps> = ({ onComplete }) => {
                 introVideo.currentTime = 4;
             }
             introVideo.playbackRate = 1.8; // 1.5x speed for intro
-            introVideo.play().catch(err => {
-                console.log('Intro autoplay prevented:', err);
-            });
+
+            const playPromise = introVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(err => {
+                    console.log('Intro autoplay prevented:', err);
+                    // Automatically skip if the browser blocks autoplay
+                    setIsComplete(true);
+                    setTimeout(onComplete, 400);
+                });
+            }
         }
-    }, [isMobile]);
+    }, [isMobile, onComplete]);
 
     return (
         <div
@@ -70,6 +77,7 @@ const IntroSequence: React.FC<IntroSequenceProps> = ({ onComplete }) => {
             <video
                 ref={introVideoRef}
                 src={isMobile ? '/assets/animations/intro for mobile.mp4' : '/assets/animations/intro for pc.mp4'}
+                autoPlay
                 muted
                 playsInline
                 preload="auto"

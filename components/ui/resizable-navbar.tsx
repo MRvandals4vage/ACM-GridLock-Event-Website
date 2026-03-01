@@ -5,7 +5,7 @@ import { cn } from "../../lib/utils";
 
 export const Navbar = ({ children, className }: { children: React.ReactNode; className?: string }) => {
     return (
-        <nav className={cn("fixed top-0 left-0 right-0 z-50", className)}>
+        <nav className={cn("fixed top-0 left-0 right-0 z-[100]", className)}>
             {children}
         </nav>
     );
