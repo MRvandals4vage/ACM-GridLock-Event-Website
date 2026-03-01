@@ -76,7 +76,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
         {/* Animated Center Line */}
         <div className="hidden md:block absolute top-[-50vh] bottom-[-50vh] w-[2px] bg-gradient-to-b from-transparent via-accent to-transparent crack-effect opacity-80 animate-pulse-slow left-1/2 -translate-x-1/2 -z-10"></div>
 
-        <motion.div variants={itemVariants} className="mb-4 relative flex flex-col items-center">
+        <motion.div variants={itemVariants} className="mb-4 relative flex flex-col items-center w-full px-2">
           {/* Emissive background glow */}
           <div className="absolute inset-0 -inset-x-20 bg-white/5 blur-[40px] rounded-full pointer-events-none"></div>
 
@@ -94,16 +94,16 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className="relative z-10"
+            className="relative z-10 w-full"
           >
-            <div className="text-3xl md:text-5xl">
-              <p className="presents-glitch">
+            <div className="text-xl sm:text-3xl md:text-5xl font-bold tracking-widest text-[#00e5ff] uppercase drop-shadow-[0_0_15px_rgba(0,229,255,0.8)] px-2">
+              <p className="presents-glitch leading-snug">
                 ACM SIGCHI Student Chapter Presents
               </p>
             </div>
 
             {/* Horizontal Neon Line */}
-            <div className="mt-6 flex justify-center">
+            <div className="mt-4 md:mt-6 flex justify-center">
               <div
                 className="h-[1.5px] w-[70%] bg-white"
                 style={{
@@ -116,7 +116,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
 
         <motion.div
           variants={itemVariants}
-          className="font-display text-7xl md:text-[10rem] font-black italic tracking-tighter mb-4 relative group cursor-default flex items-center justify-center"
+          className="font-display text-5xl sm:text-7xl md:text-[10rem] font-black italic tracking-tighter mb-4 relative group cursor-default flex flex-wrap md:flex-nowrap items-center justify-center leading-none"
         >
           <span className="text-white drop-shadow-2xl">GRID</span>
           <GlitchText speed={0.5} enableShadows={true} className="lock-title">
@@ -126,7 +126,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
 
         <motion.p
           variants={itemVariants}
-          className="text-xl md:text-3xl font-light tracking-widest text-gray-300 mb-12 max-w-2xl mx-auto drop-shadow-lg font-body uppercase"
+          className="text-base sm:text-xl md:text-3xl font-light tracking-widest text-gray-300 mb-8 md:mb-12 max-w-2xl mx-auto drop-shadow-lg font-body uppercase px-4"
         >
           The War Has Reached a <span className="font-bold text-white border-b-2 border-accent">Stalemate.</span>
         </motion.p>

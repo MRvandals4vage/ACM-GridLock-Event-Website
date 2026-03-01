@@ -63,7 +63,7 @@ const CodeathonSection: React.FC = () => {
                     >
                         <div className="space-y-4">
                             <div className="h-1 w-20 bg-cyan-500 mb-8"></div>
-                            <h2 className="text-6xl md:text-8xl font-black text-white font-orbitron tracking-tight">
+                            <h2 className="text-5xl sm:text-6xl md:text-8xl font-black text-white font-orbitron tracking-tight">
                                 CODEATHON
                             </h2>
                             <p className="text-2xl md:text-3xl text-cyan-400 font-light tracking-wide">
@@ -135,7 +135,7 @@ const CTFSection: React.FC = () => {
                     {/* Heading */}
                     <div className="text-center space-y-4">
                         <div className="h-1 w-20 bg-red-500 mx-auto mb-8"></div>
-                        <h2 className="text-5xl md:text-7xl font-black text-white font-orbitron tracking-tight">
+                        <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white font-orbitron tracking-tight">
                             OFFLINE CAPTURE THE FLAG
                         </h2>
                         <p className="text-2xl md:text-3xl text-red-400 font-light tracking-wide">
@@ -222,9 +222,8 @@ const KeysSection: React.FC = () => {
                     viewport={{ once: true }}
                     className="text-center space-y-16"
                 >
-                    {/* Heading */}
                     <div className="space-y-4">
-                        <h2 className="text-5xl md:text-7xl font-black text-white font-orbitron tracking-tight">
+                        <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white font-orbitron tracking-tight">
                             THE THREE KEYS
                         </h2>
                         <p className="text-xl text-gray-400">
