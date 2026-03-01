@@ -1,24 +1,35 @@
--- SQL Schema for teams table
+-- SQL Schema for GRIDLOCK Registration
+-- Tabular structure: Teams and Participants
+
+-- 1. Create Teams table
 CREATE TABLE teams (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     team_name text NOT NULL,
     faction text NOT NULL,
-    leader_name text NOT NULL,
-    leader_reg_no text NOT NULL,
-    leader_email text NOT NULL,
-    leader_phone text NOT NULL,
-    leader_department text,
-    leader_year text,
     advisor_name text,
     advisor_email text,
-    members jsonb NOT NULL,
-    created_at timestamptz DEFAULT now(),
-
-    -- Unique Constraints to prevent duplicates
-    CONSTRAINT unique_leader_email UNIQUE (leader_email),
-    CONSTRAINT unique_leader_reg_no UNIQUE (leader_reg_no)
+    created_at timestamptz DEFAULT now()
 );
 
--- Index for searching (Optional performance)
-CREATE INDEX idx_teams_leader_email ON teams (leader_email);
-CREATE INDEX idx_teams_leader_reg_no ON teams (leader_reg_no);
+-- 2. Create Participants table
+CREATE TABLE participants (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    team_id uuid REFERENCES teams(id) ON DELETE CASCADE,
+    name text NOT NULL,
+    reg_no text NOT NULL,
+    email text NOT NULL,
+    phone text NOT NULL,
+    department text,
+    year text,
+    is_leader boolean DEFAULT false,
+    created_at timestamptz DEFAULT now(),
+
+    -- Constraints to prevent duplicate registrations across the whole event
+    CONSTRAINT unique_participant_email UNIQUE (email),
+    CONSTRAINT unique_participant_reg_no UNIQUE (reg_no)
+);
+
+-- Indexing for performance
+CREATE INDEX idx_participants_team_id ON participants(team_id);
+CREATE INDEX idx_participants_email ON participants(email);
+CREATE INDEX idx_participants_reg_no ON participants(reg_no);

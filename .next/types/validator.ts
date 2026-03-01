@@ -74,15 +74,6 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
-// Validate ../../app/api/remaining-seats/route.ts
-{
-  type __IsExpected<Specific extends RouteHandlerConfig<"/api/remaining-seats">> = Specific
-  const handler = {} as typeof import("../../app/api/remaining-seats/route.js")
-  type __Check = __IsExpected<typeof handler>
-  // @ts-ignore
-  type __Unused = __Check
-}
-
 
 
 

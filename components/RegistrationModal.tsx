@@ -47,14 +47,6 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
     { name: '', regNo: '', phone: '', email: '', department: '' }
   ]);
 
-  const [remainingSeats, setRemainingSeats] = useState<number | null>(null);
-
-  useEffect(() => {
-    fetch('/api/remaining-seats')
-      .then(res => res.json())
-      .then(data => setRemainingSeats(data.remainingTeams))
-      .catch(err => console.error("Failed to load seats", err));
-  }, []);
 
   if (!isOpen) return null;
 
@@ -217,11 +209,6 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
                 PROTOCOL VERSION 7.4.1
               </div>
-              {remainingSeats !== null && (
-                <div className="px-2 py-0.5 border border-primary/20 rounded text-[9px] font-display text-primary tracking-widest bg-primary/5 uppercase">
-                  SEATS LEFT: {remainingSeats}
-                </div>
-              )}
             </div>
           </div>
           <button
