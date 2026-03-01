@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Member {
@@ -49,7 +49,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
 
   const [remainingSeats, setRemainingSeats] = useState<number | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch('/api/remaining-seats')
       .then(res => res.json())
       .then(data => setRemainingSeats(data.remainingTeams))

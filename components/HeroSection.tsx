@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import GlitchText from './GlitchText';
 
 interface HeroSectionProps {
@@ -8,7 +7,7 @@ interface HeroSectionProps {
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -19,7 +18,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { y: 40, opacity: 0, filter: 'blur(10px)' },
     visible: {
       y: 0,
@@ -27,7 +26,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onRegister }) => {
       filter: 'blur(0px)',
       transition: {
         duration: 1.2,
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.16, 1, 0.3, 1] as any,
       },
     },
   };
