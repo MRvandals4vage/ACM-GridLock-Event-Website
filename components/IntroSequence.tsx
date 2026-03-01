@@ -51,7 +51,7 @@ const IntroSequence: React.FC<IntroSequenceProps> = ({ onComplete }) => {
             if (!isMobile) {
                 introVideo.currentTime = 4;
             }
-            introVideo.playbackRate = 1.5; // 1.5x speed for intro
+            introVideo.playbackRate = 1.8; // 1.5x speed for intro
             introVideo.play().catch(err => {
                 console.log('Intro autoplay prevented:', err);
             });
