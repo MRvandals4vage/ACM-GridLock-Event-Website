@@ -1,3 +1,6 @@
 {
-  "/page": "app/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/admin/registrations/route": "app/api/admin/registrations/route.js",
+  "/page": "app/page.js",
+  "/admin-oversight/page": "app/admin-oversight/page.js"
 }

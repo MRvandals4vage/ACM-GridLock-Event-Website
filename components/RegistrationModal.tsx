@@ -43,7 +43,6 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
 
   // Members Data
   const [members, setMembers] = useState<Member[]>([
-    { name: '', regNo: '', phone: '', email: '', department: '' },
     { name: '', regNo: '', phone: '', email: '', department: '' }
   ]);
 
@@ -393,7 +392,8 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
                           <input placeholder="NAME" value={member.name} onChange={(e) => handleMemberChange(i, 'name', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white" />
                           <input placeholder="REG NUMBER" value={member.regNo} onChange={(e) => handleMemberChange(i, 'regNo', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white" />
                           <input placeholder="PHONE" value={member.phone} onChange={(e) => handleMemberChange(i, 'phone', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white" />
-                          <input placeholder="DEPT" value={member.department} onChange={(e) => handleMemberChange(i, 'department', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white" />
+                          <input placeholder="EMAIL" value={member.email} onChange={(e) => handleMemberChange(i, 'email', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white" />
+                          <input placeholder="DEPT" value={member.department} onChange={(e) => handleMemberChange(i, 'department', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white md:col-span-2" />
                         </div>
                       </motion.div>
                     ))}
@@ -427,13 +427,19 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
                       </div>
                     </div>
 
-                    <div className="p-6 bg-white/[0.03] border border-white/5 rounded-[2rem] flex flex-wrap gap-6 justify-center">
-                      {members.map((m, i) => (
-                        <div key={i} className="flex items-center gap-3">
-                          <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-                          <p className="text-[10px] font-display text-white italic tracking-wider uppercase opacity-80">{m.name}</p>
-                        </div>
-                      ))}
+                    <div className="p-6 bg-white/[0.03] border border-white/5 rounded-[2rem] flex flex-col gap-4">
+                      <p className="text-[8px] font-display text-primary/40 tracking-[0.3em] uppercase text-center">Crew Members</p>
+                      <div className="flex flex-wrap gap-6 justify-center">
+                        {members.map((m, i) => (
+                          <div key={i} className="flex flex-col items-center gap-1">
+                            <div className="flex items-center gap-2">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+                              <p className="text-[10px] font-display text-white italic tracking-wider uppercase opacity-80">{m.name}</p>
+                            </div>
+                            <p className="text-[8px] text-gray-500 font-mono">{m.email}</p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
