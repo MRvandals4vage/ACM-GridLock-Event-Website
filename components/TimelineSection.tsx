@@ -2,94 +2,98 @@
 
 import { Timeline } from './Timeline';
 
-const recruitmentData = [
+const eventData = [
     {
-        title: "Feb 17",
+        title: "9:00 – 9:30",
         content: (
             <div className="space-y-4">
                 <div className="bg-gradient-to-br from-black via-gray-900 to-black border border-cyan-500/30 rounded-xl p-6 hover:border-cyan-400/60 transition-all duration-300 shadow-lg hover:shadow-cyan-500/20">
-                    <h4 className="text-2xl font-bold text-cyan-400 mb-3 font-orbitron">Applications Open</h4>
+                    <h4 className="text-2xl font-bold text-cyan-400 mb-3 font-orbitron">Registration</h4>
                     <p className="text-gray-300 leading-relaxed mb-4">
-                        The recruitment portal goes live. Warriors from all corners can submit their applications to join the elite ranks.
+                        Check-in and team verification. Secure your access keys and prepare for deployment.
                     </p>
                     <div className="flex items-center gap-2 text-sm text-cyan-300">
                         <span className="inline-block w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
-                        <span className="font-orbitron">Portal Active</span>
+                        <span className="font-orbitron">Check-in Active</span>
                     </div>
                 </div>
             </div>
         ),
     },
     {
-        title: "Feb 21",
-        content: (
-            <div className="space-y-4">
-                <div className="bg-gradient-to-br from-black via-gray-900 to-black border border-red-500/30 rounded-xl p-6 hover:border-red-400/60 transition-all duration-300 shadow-lg hover:shadow-red-500/20">
-                    <h4 className="text-2xl font-bold text-red-400 mb-3 font-orbitron">Applications Close</h4>
-                    <p className="text-gray-300 leading-relaxed mb-4">
-                        The gates close. All submissions are locked in and the selection process begins. Only the worthy will advance.
-                    </p>
-                    <div className="flex items-center gap-2 text-sm text-red-300">
-                        <span className="inline-block w-2 h-2 bg-red-400 rounded-full"></span>
-                        <span className="font-orbitron">Deadline: 11:59 PM</span>
-                    </div>
-                </div>
-            </div>
-        ),
-    },
-    {
-        title: "Feb 22",
-        content: (
-            <div className="space-y-4">
-                <div className="bg-gradient-to-br from-black via-gray-900 to-black border border-cyan-500/30 rounded-xl p-6 hover:border-cyan-400/60 transition-all duration-300 shadow-lg hover:shadow-cyan-500/20">
-                    <h4 className="text-2xl font-bold text-cyan-400 mb-3 font-orbitron">Shortlist Released</h4>
-                    <p className="text-gray-300 leading-relaxed mb-4">
-                        The first wave of candidates is revealed. Those who made the cut will be notified and prepared for the next phase.
-                    </p>
-                    <div className="flex items-center gap-2 text-sm text-cyan-300">
-                        <span className="inline-block w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
-                        <span className="font-orbitron">Check Your Status</span>
-                    </div>
-                </div>
-            </div>
-        ),
-    },
-    {
-        title: "Feb 23-24",
+        title: "9:30 – 10:00",
         content: (
             <div className="space-y-4">
                 <div className="bg-gradient-to-br from-black via-gray-900 to-black border border-purple-500/30 rounded-xl p-6 hover:border-purple-400/60 transition-all duration-300 shadow-lg hover:shadow-purple-500/20">
-                    <h4 className="text-2xl font-bold text-purple-400 mb-3 font-orbitron">Interview Rounds</h4>
+                    <h4 className="text-2xl font-bold text-purple-400 mb-3 font-orbitron">Opening Brief + Rules</h4>
                     <p className="text-gray-300 leading-relaxed mb-4">
-                        Face-to-face evaluation begins. Shortlisted candidates will demonstrate their skills, knowledge, and determination in structured interviews.
+                        Mission overview, environment setup, and engagement protocols. Understanding the rules is the difference between victory and stalemate.
                     </p>
-                    <div className="grid grid-cols-2 gap-3 mt-4">
-                        <div className="bg-black/50 rounded-lg p-3 border border-purple-500/20">
-                            <p className="text-xs text-purple-300 font-orbitron">Day 1</p>
-                            <p className="text-sm text-gray-300">Technical Assessment</p>
-                        </div>
-                        <div className="bg-black/50 rounded-lg p-3 border border-purple-500/20">
-                            <p className="text-xs text-purple-300 font-orbitron">Day 2</p>
-                            <p className="text-sm text-gray-300">Final Evaluation</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         ),
     },
     {
-        title: "Feb 25",
+        title: "10:00 – 12:15",
+        content: (
+            <div className="space-y-4">
+                <div className="bg-gradient-to-br from-black via-gray-900 to-black border border-blue-500/30 rounded-xl p-6 hover:border-blue-400/60 transition-all duration-300 shadow-lg hover:shadow-blue-500/20">
+                    <h4 className="text-2xl font-bold text-blue-400 mb-3 font-orbitron">Round 1 – Codathon</h4>
+                    <p className="text-gray-300 leading-relaxed mb-4">
+                        The primary construction phase. Architect and implement your core solution to the tactical problems presented.
+                    </p>
+                </div>
+            </div>
+        ),
+    },
+    {
+        title: "12:20 – 1:30",
+        content: (
+            <div className="space-y-4">
+                <div className="bg-gradient-to-br from-black via-gray-900 to-black border border-gray-500/30 rounded-xl p-6 hover:border-gray-400/60 transition-all duration-300 shadow-lg hover:shadow-gray-500/20">
+                    <h4 className="text-2xl font-bold text-gray-400 mb-3 font-orbitron">Lunch Break</h4>
+                    <p className="text-gray-300 leading-relaxed mb-4">
+                        Strategic refuel. Analyze the first phase performance and recalibrate for the afternoon assault.
+                    </p>
+                </div>
+            </div>
+        ),
+    },
+    {
+        title: "1:30 – 2:45",
+        content: (
+            <div className="space-y-4">
+                <div className="bg-gradient-to-br from-black via-gray-900 to-black border border-red-500/30 rounded-xl p-6 hover:border-red-400/60 transition-all duration-300 shadow-lg hover:shadow-red-500/20">
+                    <h4 className="text-2xl font-bold text-red-400 mb-3 font-orbitron">Round 2 – 3-Node Rotation</h4>
+                    <p className="text-gray-300 leading-relaxed mb-4">
+                        High-speed tactical rotation. Coordinate with your team to secure and maintain control over critical network nodes.
+                    </p>
+                </div>
+            </div>
+        ),
+    },
+    {
+        title: "2:45 – 3:45",
         content: (
             <div className="space-y-4">
                 <div className="bg-gradient-to-br from-black via-gray-900 to-black border border-green-500/30 rounded-xl p-6 hover:border-green-400/60 transition-all duration-300 shadow-lg hover:shadow-green-500/20">
-                    <h4 className="text-2xl font-bold text-green-400 mb-3 font-orbitron">Final Results</h4>
+                    <h4 className="text-2xl font-bold text-green-400 mb-3 font-orbitron">Round 3 – GPS Precision Capture</h4>
                     <p className="text-gray-300 leading-relaxed mb-4">
-                        The chosen ones are announced. New recruits join the ranks and prepare to enter the Grid. The stalemate will be broken.
+                        Final field engagement. Deploy precision capture techniques to secure geographical assets and tip the scales.
                     </p>
-                    <div className="flex items-center gap-2 text-sm text-green-300">
-                        <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        <span className="font-orbitron">Welcome to Gridlock</span>
-                    </div>
+                </div>
+            </div>
+        ),
+    },
+    {
+        title: "3:45 – 4:00",
+        content: (
+            <div className="space-y-4">
+                <div className="bg-gradient-to-br from-black via-gray-900 to-black border border-yellow-500/30 rounded-xl p-6 hover:border-yellow-400/60 transition-all duration-300 shadow-lg hover:shadow-yellow-500/20">
+                    <h4 className="text-2xl font-bold text-yellow-400 mb-3 font-orbitron">Results + Closing</h4>
+                    <p className="text-gray-300 leading-relaxed mb-4">
+                        Data finalization and victor announcement. The stalemate is broken.
+                    </p>
                 </div>
             </div>
         ),
@@ -102,7 +106,7 @@ export default function TimelineSection() {
             id="timeline"
             className="relative min-h-screen py-20 overflow-hidden bg-gradient-to-b from-black via-black to-red-950/10"
         >
-            <Timeline data={recruitmentData} />
+            <Timeline data={eventData} />
         </section>
     );
 }

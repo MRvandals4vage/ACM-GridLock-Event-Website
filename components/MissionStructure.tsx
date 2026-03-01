@@ -265,7 +265,7 @@ const KeysSection: React.FC = () => {
 
 const MissionStructure: React.FC = () => {
     return (
-        <div className="relative w-full">
+        <div id="intel" className="relative w-full">
             {/* Fixed background that stays constant while scrolling through Mission Structure */}
             <SharedBackground />
 

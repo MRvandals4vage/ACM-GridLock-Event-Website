@@ -26,10 +26,10 @@ export const NavBody = ({ children, className }: { children: React.ReactNode; cl
     return (
         <div
             className={cn(
-                "hidden md:flex items-center justify-between px-8 py-4 mt-4 rounded-3xl transition-all duration-500 ease-out",
+                "hidden md:flex items-center justify-between px-8 py-4 mt-4 rounded-3xl transition-all duration-700 ease-[0.16, 1, 0.3, 1]",
                 "bg-black/40 backdrop-blur-xl border border-white/10",
                 "shadow-[0_8px_32px_0_rgba(0,229,255,0.15)]",
-                isScrolled ? "mx-8 md:mx-16 lg:mx-24" : "mx-4",
+                isScrolled ? "mx-12 md:mx-32 lg:mx-[20vw] py-2 px-12" : "mx-4 py-4 px-8",
                 className
             )}
         >

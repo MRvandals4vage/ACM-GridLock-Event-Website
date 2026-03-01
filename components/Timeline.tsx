@@ -39,10 +39,10 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
                 <div className="text-center">
                     <h2 className="text-4xl md:text-6xl mb-6 text-cyan-400 max-w-4xl font-bold text-center mx-auto mt-10 font-orbitron tracking-wider">
-                        Recruitment Timeline
+                        Event Timeline
                     </h2>
                     <p className="text-gray-400 text-base md:text-lg max-w-2xl text-center mx-auto">
-                        Follow our recruitment journey from start to finish. Mark your calendars for these important milestones.
+                        Stay on schedule. Don't miss a single objective in this full-day tactical engagement.
                     </p>
                 </div>
             </div>

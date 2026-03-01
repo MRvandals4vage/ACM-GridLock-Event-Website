@@ -152,3 +152,16 @@
 .lock-title::after {
   color: #ff0040;
 }
+
+.presents-glitch {
+  color: #FFFFFF;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+}
+
+.presents-glitch::before,
+.presents-glitch::after {
+  color: #FFFFFF;
+}

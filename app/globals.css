@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary: #00E5FF;
+    --secondary: #FF1744;
+    --accent: #FF9100;
+    --background-light: #0B0F1A;
+    --background-dark: #05070D;
+    --surface-dark: #161B2E;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #05070D;
+    color: #EAEAEA;
+    overflow-x: hidden;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.font-display {
+    font-family: 'Orbitron', sans-serif;
+}
+
+.text-glow-blue {
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
+}
+
+.text-glow-red {
+    text-shadow: 0 0 15px rgba(255, 23, 68, 0.6);
+}
+
+.crack-effect {
+    box-shadow: 0 0 15px #FF9100, 0 0 30px rgba(255, 145, 0, 0.4);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #0B0F1A;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #00E5FF;
+    border-radius: 10px;
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0)
+    }
+
+    20% {
+        transform: translate(-2px, 2px)
+    }
+
+    40% {
+        transform: translate(-2px, -2px)
+    }
+
+    60% {
+        transform: translate(2px, 2px)
+    }
+
+    80% {
+        transform: translate(2px, -2px)
+    }
+
+    100% {
+        transform: translate(0)
+    }
+}
+
+.animate-glitch {
+    animation: glitch 1s infinite linear alternate-reverse;
+}
+
+.animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
