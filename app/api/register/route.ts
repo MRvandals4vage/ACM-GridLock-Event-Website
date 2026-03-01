@@ -3,11 +3,7 @@ import { supabase } from '@/lib/supabase';
 
 export async function POST(req: Request) {
     if (!supabase) {
-        // TACTICAL DEMO MODE: Credentials missing, but we proceed with success for frontend stability
-        return NextResponse.json({
-            message: 'DEMO MODE: Registration successful (Data not saved)',
-            team: { team_name: 'DEMO SQUAD' }
-        }, { status: 200 });
+        return NextResponse.json({ error: 'Database connection not established' }, { status: 503 });
     }
     try {
         const body = await req.json();
