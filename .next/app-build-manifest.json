@@ -12,15 +12,15 @@
       "static/css/app/page.css",
       "static/chunks/app/page.js"
     ],
-    "/api/register/route": [
+    "/admin-oversight/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/register/route.js"
+      "static/chunks/app/admin-oversight/page.js"
     ],
-    "/_not-found/page": [
+    "/api/admin/registrations/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/chunks/app/api/admin/registrations/route.js"
     ]
   }
 }

@@ -50,7 +50,7 @@ const AboutSection: React.FC = () => {
                                     GRIDLOCK is a multi-stage technical adventure challenge that simulates restoring a corrupted digital grid system across campus.
                                 </p>
                                 <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
-                                    Teams must decode, calculate, and navigate through three power nodes before executing a final GPS-based precision capture at Vandure Square.
+                                    Teams must decode, calculate, and navigate through three power nodes before executing a final GPS-based precision capture at Vendhar Square.
                                 </p>
 
                                 <ul className="space-y-4 pt-4">
