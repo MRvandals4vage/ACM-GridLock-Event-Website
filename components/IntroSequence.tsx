@@ -74,7 +74,7 @@ const IntroSequence: React.FC<IntroSequenceProps> = ({ onComplete }) => {
                 playsInline
                 preload="auto"
                 className="w-full h-full object-cover"
-                style={{ imageRendering: 'high-quality' }}
+                style={{ imageRendering: 'auto' }}
             />
 
             {/* Skip button */}

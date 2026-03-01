@@ -1,5 +1,4 @@
 {
-  "/api/admin/registrations/route": "app/api/admin/registrations/route.js",
   "/admin-oversight/page": "app/admin-oversight/page.js",
   "/page": "app/page.js"
 }
