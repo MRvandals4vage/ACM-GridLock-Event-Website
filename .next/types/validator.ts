@@ -47,6 +47,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 }
 
 
+// Validate ../../app/admin-oversight/attendance/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/admin-oversight/attendance">> = Specific
+  const handler = {} as typeof import("../../app/admin-oversight/attendance/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../app/admin-oversight/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/admin-oversight">> = Specific

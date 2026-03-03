@@ -10,22 +10,22 @@ export async function POST(req: Request) {
         const body = await req.json();
         const { teamId, secret } = body;
 
-        if (!teamId || !secret) {
-            return NextResponse.json({ error: 'Missing teamId or secret' }, { status: 400 });
+        // 1. Verify team and secret
+        let query = supabase.from('teams').select('id, attendance_secret');
+
+        if (teamId) {
+            query = query.eq('id', teamId);
+        } else {
+            query = query.eq('attendance_secret', secret);
         }
 
-        // 1. Verify team and secret
-        const { data: team, error: teamError } = await supabase
-            .from('teams')
-            .select('id, attendance_secret')
-            .eq('id', teamId)
-            .single();
+        const { data: team, error: teamError } = await query.single();
 
         if (teamError || !team) {
-            return NextResponse.json({ error: 'Team not found' }, { status: 404 });
+            return NextResponse.json({ error: 'Operative not found or invalid signature' }, { status: 404 });
         }
 
-        if (team.attendance_secret !== secret) {
+        if (teamId && team.attendance_secret !== secret) {
             return NextResponse.json({ error: 'Invalid security clearance' }, { status: 403 });
         }
 
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
         const { error: checkInError } = await supabase
             .from('participants')
             .update({ attendance_checked_in: true })
-            .eq('team_id', teamId);
+            .eq('team_id', team.id);
 
         if (checkInError) throw checkInError;
 

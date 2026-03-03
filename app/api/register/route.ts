@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { resend } from '@/lib/resend';
 
 export async function POST(req: Request) {
     if (!supabase) {
@@ -92,15 +93,45 @@ export async function POST(req: Request) {
 
         if (participantsError) {
             // If participant insertion fails (e.g. duplicate email), we should ideally rollback the team insert.
-            // But since we aren't using a full transaction (which supabase-js doesn't support easily without RPC),
-            // a simple cleanup or just reporting the error is fine for this "simple" architecture.
-            // Duplicate key error code is 23505
             if (participantsError.code === '23505') {
-                // Clean up the team if participants fail (since they are required)
                 await supabase.from('teams').delete().eq('id', teamData.id);
                 return NextResponse.json({ error: 'Duplicate participant detected (Email or Reg No already registered)' }, { status: 409 });
             }
             throw participantsError;
+        }
+
+        // 5. Dispatch Confirmation Email
+        if (resend) {
+            try {
+                const qrData = `GRIDLOCK_ATTENDANCE:${teamData.id}:${teamData.attendance_secret}`;
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
+
+                await resend.emails.send({
+                    from: 'GRIDLOCK <onboarding@resend.dev>',
+                    to: leader_email,
+                    subject: `MISSION BRIEFING: Uplink Confirmation for Squad ${team_name}`,
+                    html: `
+                        <div style="font-family: sans-serif; background-color: #05070a; color: #fafafa; padding: 40px; border-radius: 24px; border: 1px solid #1e1e1e;">
+                            <h1 style="color: #00E5FF; text-transform: uppercase; font-style: italic; letter-spacing: -1px;">Uplink Confirmed</h1>
+                            <p style="color: #a1a1aa;">Operative <strong>${leader_name}</strong>, squad <strong>${team_name}</strong> is now registered for GRIDLOCK.</p>
+                            
+                            <div style="background-color: #0e1117; padding: 24px; border: 1px solid #2d2d2d; border-radius: 16px; margin: 32px 0; text-align: center;">
+                                <h2 style="color: #00E5FF; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-top: 0; opacity: 0.6;">ATTENDANCE PIN</h2>
+                                <p style="font-size: 28px; font-family: monospace; letter-spacing: 8px; margin: 12px 0; font-weight: bold; color: #ffffff;">${teamData.attendance_secret}</p>
+                            </div>
+                            
+                            <div style="text-align: center; margin: 32px 0;">
+                                <img src="${qrUrl}" alt="QR Code" style="border: 8px solid #ffffff; border-radius: 12px; width: 200px; height: 200px;" />
+                                <p style="font-size: 10px; color: #52525b; margin-top: 16px; letter-spacing: 1px; text-transform: uppercase;">SECURE ACCESS BARCODE</p>
+                            </div>
+                            
+                            <p style="font-size: 11px; color: #3f3f46; text-align: center;">Present this communique at the checkpoint for bioscan verification.</p>
+                        </div>
+                    `
+                });
+            } catch (emailError) {
+                console.error('Email Dispatch Failure:', emailError);
+            }
         }
 
         return NextResponse.json({ message: 'Registration Successful', team_id: teamData.id }, { status: 200 });

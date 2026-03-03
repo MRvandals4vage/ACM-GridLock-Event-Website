@@ -1,9 +1,10 @@
 {
-  "/api/admin/registrations/route": "/api/admin/registrations",
-  "/api/intel/route": "/api/intel",
   "/api/admin/check-in/route": "/api/admin/check-in",
-  "/_not-found/page": "/_not-found",
   "/api/register/route": "/api/register",
+  "/api/admin/registrations/route": "/api/admin/registrations",
+  "/_not-found/page": "/_not-found",
+  "/api/intel/route": "/api/intel",
+  "/admin-oversight/attendance/page": "/admin-oversight/attendance",
   "/admin-oversight/page": "/admin-oversight",
   "/page": "/"
 }

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 
 interface Participant {
     id: string;
@@ -142,6 +143,12 @@ export default function AdminOversight() {
                             Live Uplink Active
                         </span>
                         <span>Total Squads: {registrations.length}</span>
+                        <Link
+                            href="/admin-oversight/attendance"
+                            className="ml-4 px-4 py-1.5 bg-primary/20 text-primary border border-primary/30 rounded-full hover:bg-primary hover:text-background-dark transition-all text-[9px] font-bold"
+                        >
+                            GO TO ATTENDANCE
+                        </Link>
                     </div>
                 </div>
 
