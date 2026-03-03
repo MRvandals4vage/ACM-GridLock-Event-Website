@@ -37,6 +37,12 @@
       "regex": "^/admin\\-oversight(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin\\-oversight(?:/)?$"
+    },
+    {
+      "page": "/admin-oversight/attendance",
+      "regex": "^/admin\\-oversight/attendance(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin\\-oversight/attendance(?:/)?$"
     }
   ],
   "dataRoutes": [],
