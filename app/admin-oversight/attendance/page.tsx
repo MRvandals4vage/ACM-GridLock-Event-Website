@@ -6,18 +6,20 @@ import { Html5QrcodeScanner } from 'html5-qrcode';
 
 export default function AttendancePage() {
     const [pin, setPin] = useState('');
+    const [teamName, setTeamName] = useState('');
+    const [mode, setMode] = useState<'PIN' | 'NAME'>('PIN');
     const [scanning, setScanning] = useState(false);
     const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
     const [loading, setLoading] = useState(false);
     const scannerRef = useRef<Html5QrcodeScanner | null>(null);
 
-    const markAttendance = async (teamId: string, secret: string) => {
+    const markAttendance = async (teamId: string, secret: string, teamNameVal?: string) => {
         setLoading(true);
         try {
             const response = await fetch('/api/admin/check-in', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ teamId, secret }),
+                body: JSON.stringify({ teamId, secret, teamName: teamNameVal }),
             });
             const data = await response.json();
             setResult({ success: response.ok, message: data.message || data.error });
@@ -28,16 +30,12 @@ export default function AttendancePage() {
         }
     };
 
-    const handlePinSubmit = (e: React.FormEvent) => {
+    const handleManualSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Since the pin alone doesn't contain teamId, we need to handle this.
-        // Usually, the QR code will have both. For manual entry, we might need a search or the leader email.
-        // But the user said "entering the pin". If the pin is unique enough (attendance_secret is 32 chars),
-        // we might need a search-by-secret endpoint. 
-        // Let's assume the user wants to enter the full secret.
-        // I'll update the check-in API to support finding by secret if teamId is missing.
-        if (pin.length > 0) {
+        if (mode === 'PIN' && pin) {
             markAttendance('', pin);
+        } else if (mode === 'NAME' && teamName) {
+            markAttendance('', '', teamName);
         }
     };
 
@@ -92,8 +90,8 @@ export default function AttendancePage() {
                             setResult(null);
                         }}
                         className={`w-full py-6 rounded-2xl border-2 transition-all flex flex-col items-center gap-4 ${scanning
-                                ? 'border-secondary bg-secondary/10 text-secondary'
-                                : 'border-white/10 bg-white/5 text-white/60 hover:border-primary/50 hover:bg-primary/5 hover:text-white'
+                            ? 'border-secondary bg-secondary/10 text-secondary'
+                            : 'border-white/10 bg-white/5 text-white/60 hover:border-primary/50 hover:bg-primary/5 hover:text-white'
                             }`}
                     >
                         <span className="material-icons text-4xl">{scanning ? 'qr_code_scanner' : 'photo_camera'}</span>
@@ -107,25 +105,54 @@ export default function AttendancePage() {
                     )}
 
                     {!scanning && (
-                        <form onSubmit={handlePinSubmit} className="space-y-4">
-                            <div className="relative">
-                                <p className="text-[8px] text-center text-gray-500 tracking-widest uppercase mb-2">Manual Override (Enter PIN)</p>
-                                <input
-                                    type="text"
-                                    value={pin}
-                                    onChange={(e) => setPin(e.target.value)}
-                                    placeholder="XXXXXXXX..."
-                                    className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-center text-primary font-mono tracking-[0.5em] focus:border-primary outline-none transition-all"
-                                />
+                        <div className="space-y-6">
+                            <div className="flex bg-black/40 p-1 rounded-xl border border-white/5">
+                                <button
+                                    onClick={() => setMode('PIN')}
+                                    className={`flex-1 py-2 text-[10px] font-bold uppercase rounded-lg transition-all ${mode === 'PIN' ? 'bg-primary text-background-dark' : 'text-gray-500'}`}
+                                >
+                                    PIN Access
+                                </button>
+                                <button
+                                    onClick={() => setMode('NAME')}
+                                    className={`flex-1 py-2 text-[10px] font-bold uppercase rounded-lg transition-all ${mode === 'NAME' ? 'bg-primary text-background-dark' : 'text-gray-500'}`}
+                                >
+                                    Squad Name
+                                </button>
                             </div>
-                            <button
-                                type="submit"
-                                disabled={loading || !pin}
-                                className="w-full py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold uppercase tracking-[0.2em] rounded-xl transition-all disabled:opacity-20"
-                            >
-                                {loading ? 'UPLINKING...' : 'VERIFY PIN'}
-                            </button>
-                        </form>
+
+                            <form onSubmit={handleManualSubmit} className="space-y-4">
+                                <div className="relative">
+                                    <p className="text-[8px] text-center text-gray-500 tracking-widest uppercase mb-2">
+                                        Manual Override ({mode === 'PIN' ? 'Enter PIN' : 'Enter Squad Name'})
+                                    </p>
+                                    {mode === 'PIN' ? (
+                                        <input
+                                            type="text"
+                                            value={pin}
+                                            onChange={(e) => setPin(e.target.value)}
+                                            placeholder="XXXXXXXX..."
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-center text-primary font-mono tracking-[0.5em] focus:border-primary outline-none transition-all placeholder:tracking-normal"
+                                        />
+                                    ) : (
+                                        <input
+                                            type="text"
+                                            value={teamName}
+                                            onChange={(e) => setTeamName(e.target.value)}
+                                            placeholder="SQUAD NAME..."
+                                            className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-center text-primary font-display font-black tracking-widest focus:border-primary outline-none transition-all italic placeholder:italic"
+                                        />
+                                    )}
+                                </div>
+                                <button
+                                    type="submit"
+                                    disabled={loading || (mode === 'PIN' ? !pin : !teamName)}
+                                    className="w-full py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold uppercase tracking-[0.2em] rounded-xl transition-all disabled:opacity-20"
+                                >
+                                    {loading ? 'UPLINKING...' : 'VERIFY IDENTITY'}
+                                </button>
+                            </form>
+                        </div>
                     )}
                 </div>
 
@@ -136,8 +163,8 @@ export default function AttendancePage() {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0 }}
                             className={`p-6 rounded-2xl border text-center space-y-2 ${result.success
-                                    ? 'bg-primary/10 border-primary/30 text-primary'
-                                    : 'bg-secondary/10 border-secondary/30 text-secondary'
+                                ? 'bg-primary/10 border-primary/30 text-primary'
+                                : 'bg-secondary/10 border-secondary/30 text-secondary'
                                 }`}
                         >
                             <span className="material-icons text-3xl">
@@ -170,3 +197,4 @@ export default function AttendancePage() {
         </div>
     );
 }
+

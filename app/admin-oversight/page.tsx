@@ -84,6 +84,8 @@ export default function AdminOversight() {
         }
     };
 
+    const [expandedTeamId, setExpandedTeamId] = useState<string | null>(null);
+
     const filteredTeams = registrations.filter(team =>
         team.team_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         team.participants.some(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -167,7 +169,7 @@ export default function AdminOversight() {
                 </div>
             </header>
 
-            <main className="max-w-7xl mx-auto space-y-8">
+            <main className="max-w-7xl mx-auto space-y-4">
                 {loading ? (
                     <div className="flex items-center justify-center py-40">
                         <div className="animate-spin w-10 h-10 border-4 border-primary border-t-transparent rounded-full"></div>
@@ -179,100 +181,119 @@ export default function AdminOversight() {
                         <button onClick={fetchRegistrations} className="px-6 py-2 border border-secondary text-secondary rounded-full text-xs hover:bg-secondary/10 uppercase">Retry Uplink</button>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 gap-6">
+                    <div className="grid grid-cols-1 gap-4">
                         {filteredTeams.map((team) => (
                             <motion.div
                                 key={team.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:bg-white/[0.07] transition-all"
+                                layout
+                                className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:bg-white/[0.07] transition-all"
                             >
-                                {/* Team Summary Header */}
-                                <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/5 bg-white/[0.02]">
+                                {/* Team Summary Header (Clickable) */}
+                                <div
+                                    className="p-5 md:p-6 flex items-center justify-between cursor-pointer group"
+                                    onClick={() => setExpandedTeamId(expandedTeamId === team.id ? null : team.id)}
+                                >
                                     <div className="flex items-center gap-6">
-                                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-display font-black text-xl shadow-lg ${team.faction === 'RANGER' ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-secondary/20 text-secondary border border-secondary/30'
+                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-display font-black text-lg shadow-lg ${team.faction === 'RANGER' ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-secondary/20 text-secondary border border-secondary/30'
                                             }`}>
                                             {team.faction === 'RANGER' ? 'R' : 'V'}
                                         </div>
-                                        <div className="space-y-0.5">
-                                            <h2 className="text-2xl font-display font-black italic tracking-tight uppercase leading-none">{team.team_name}</h2>
-                                            <p className="text-[10px] text-gray-500 font-display tracking-widest uppercase italic">
-                                                Enlisted: {new Date(team.created_at).toLocaleString()}
+                                        <div>
+                                            <h2 className="text-xl font-display font-black italic tracking-tight uppercase leading-none group-hover:text-primary transition-colors">{team.team_name}</h2>
+                                            <p className="text-[8px] text-gray-500 font-display tracking-widest uppercase mt-1 italic">
+                                                Operatives: {team.participants.length} // Deployment: {new Date(team.created_at).toLocaleDateString()}
                                             </p>
                                         </div>
                                     </div>
 
-                                    <div className="flex flex-wrap gap-4 md:gap-6 items-center">
-                                        <div className="flex flex-wrap gap-4 md:gap-8 bg-black/20 p-4 rounded-2xl border border-white/5">
-                                            <div className="space-y-1">
-                                                <p className="text-[8px] text-gray-500 tracking-widest uppercase">Advisor Contact</p>
-                                                <p className="text-xs font-medium text-white/90 uppercase">{team.advisor_name || 'N/A'}</p>
-                                                <p className="text-[10px] text-primary/70 font-mono tracking-tight">{team.advisor_email || 'NO_EMAIL'}</p>
-                                            </div>
-                                            <div className="space-y-1">
-                                                <p className="text-[8px] text-gray-500 tracking-widest uppercase">Squad Size</p>
-                                                <p className="text-xs font-display text-white">{team.participants.length} OPERATIVES</p>
-                                            </div>
-                                        </div>
-
+                                    <div className="flex items-center gap-4">
                                         <button
-                                            onClick={() => handlePurge(team.id, team.team_name)}
-                                            className="w-12 h-12 rounded-2xl flex items-center justify-center bg-secondary/10 text-secondary border border-secondary/20 hover:bg-secondary hover:text-white transition-all group/purge"
-                                            title="PURGE SQUAD"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handlePurge(team.id, team.team_name);
+                                            }}
+                                            className="w-8 h-8 rounded-lg flex items-center justify-center bg-secondary/10 text-secondary border border-secondary/20 hover:bg-secondary hover:text-white transition-all group/purge"
                                         >
-                                            <span className="material-icons text-xl group-hover/purge:animate-pulse">delete_forever</span>
+                                            <span className="material-icons text-base">delete_forever</span>
                                         </button>
+                                        <span className={`material-icons transition-transform duration-300 ${expandedTeamId === team.id ? 'rotate-180' : ''}`}>
+                                            expand_more
+                                        </span>
                                     </div>
                                 </div>
 
-                                {/* Participants Table */}
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-left border-collapse">
-                                        <thead>
-                                            <tr className="bg-black/40 border-b border-white/5">
-                                                <th className="px-8 py-4 text-[10px] font-display tracking-widest text-gray-400 uppercase">Status</th>
-                                                <th className="px-8 py-4 text-[10px] font-display tracking-widest text-gray-400 uppercase">Operative Name</th>
-                                                <th className="px-8 py-4 text-[10px] font-display tracking-widest text-gray-400 uppercase">RA ID</th>
-                                                <th className="px-8 py-4 text-[10px] font-display tracking-widest text-gray-400 uppercase">Communication</th>
-                                                <th className="px-8 py-4 text-[10px] font-display tracking-widest text-gray-400 uppercase">Dept / Year</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-white/[0.02]">
-                                            {team.participants.map((p) => (
-                                                <tr key={p.id} className="hover:bg-white/[0.02] transition-colors group">
-                                                    <td className="px-8 py-5">
-                                                        <span className={`text-[9px] px-2 py-0.5 rounded-full font-display border tracking-tighter ${p.is_leader
-                                                            ? 'bg-primary/20 text-primary border-primary/30 shadow-[0_0_10px_rgba(0,229,255,0.2)]'
-                                                            : 'bg-white/5 text-gray-400 border-white/10'
-                                                            }`}>
-                                                            {p.is_leader ? 'LEADER' : 'MEMBER'}
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-8 py-5">
-                                                        <p className="font-display text-sm font-bold text-white group-hover:text-primary transition-colors uppercase">{p.name}</p>
-                                                    </td>
-                                                    <td className="px-8 py-5 font-mono text-xs text-gray-400 tracking-wider font-semibold">
-                                                        {p.reg_no}
-                                                    </td>
-                                                    <td className="px-8 py-5 space-y-1">
-                                                        <div className="flex items-center gap-2 text-xs text-white/80 font-mono">
-                                                            <span className="material-icons text-[14px] text-primary/50">email</span>
-                                                            {p.email}
-                                                        </div>
-                                                        <div className="flex items-center gap-2 text-xs text-white/80 font-mono">
-                                                            <span className="material-icons text-[14px] text-primary/50">smartphone</span>
-                                                            {p.phone}
-                                                        </div>
-                                                    </td>
-                                                    <td className="px-8 py-5">
-                                                        <p className="text-xs text-white uppercase font-semibold">{p.department}</p>
-                                                        <p className="text-[10px] text-gray-500 uppercase tracking-widest">{p.year || '-'}</p>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                {/* Expanded Participants Table */}
+                                <AnimatePresence>
+                                    {expandedTeamId === team.id && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: 'auto', opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            className="border-t border-white/5 bg-black/20"
+                                        >
+                                            <div className="p-6 space-y-6">
+                                                {/* Advisor Info */}
+                                                <div className="flex gap-8 px-4 py-3 bg-white/5 rounded-xl border border-white/5">
+                                                    <div className="space-y-1">
+                                                        <p className="text-[8px] text-gray-500 tracking-widest uppercase font-display">Faculty Advisor</p>
+                                                        <p className="text-xs font-bold text-white uppercase">{team.advisor_name || 'N/A'}</p>
+                                                    </div>
+                                                    <div className="space-y-1">
+                                                        <p className="text-[8px] text-gray-500 tracking-widest uppercase font-display">Advisor Contact</p>
+                                                        <p className="text-[10px] text-primary font-mono tracking-tight">{team.advisor_email || 'NO_EMAIL'}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="overflow-x-auto rounded-xl border border-white/10">
+                                                    <table className="w-full text-left border-collapse">
+                                                        <thead>
+                                                            <tr className="bg-white/5 border-b border-white/5">
+                                                                <th className="px-6 py-3 text-[9px] font-display tracking-widest text-gray-400 uppercase">Role</th>
+                                                                <th className="px-6 py-3 text-[9px] font-display tracking-widest text-gray-400 uppercase">Operative</th>
+                                                                <th className="px-6 py-3 text-[9px] font-display tracking-widest text-gray-400 uppercase">RA ID</th>
+                                                                <th className="px-6 py-3 text-[9px] font-display tracking-widest text-gray-400 uppercase">Contacts</th>
+                                                                <th className="px-6 py-3 text-[9px] font-display tracking-widest text-gray-400 uppercase">Faculty Advisor</th>
+                                                                <th className="px-6 py-3 text-[9px] font-display tracking-widest text-gray-400 uppercase">Dept</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody className="divide-y divide-white/[0.02]">
+                                                            {team.participants.map((p) => (
+                                                                <tr key={p.id} className="hover:bg-white/[0.02] transition-colors group/row">
+                                                                    <td className="px-6 py-4">
+                                                                        <span className={`text-[8px] px-2 py-0.5 rounded-full font-display border tracking-tighter ${p.is_leader
+                                                                            ? 'bg-primary/20 text-primary border-primary/30'
+                                                                            : 'bg-white/5 text-gray-400 border-white/10'
+                                                                            }`}>
+                                                                            {p.is_leader ? 'LEADER' : 'MEMBER'}
+                                                                        </span>
+                                                                    </td>
+                                                                    <td className="px-6 py-4">
+                                                                        <p className="font-display text-sm font-bold text-white uppercase group-hover/row:text-primary transition-colors">{p.name}</p>
+                                                                    </td>
+                                                                    <td className="px-6 py-4 font-mono text-[10px] text-gray-400 tracking-wider">
+                                                                        {p.reg_no}
+                                                                    </td>
+                                                                    <td className="px-6 py-4 space-y-1">
+                                                                        <p className="text-[10px] text-white/70 font-mono">{p.email}</p>
+                                                                        <p className="text-[10px] text-white/50 font-mono">{p.phone}</p>
+                                                                    </td>
+                                                                    <td className="px-6 py-4">
+                                                                        <p className="text-[10px] text-white uppercase font-bold">{(p as any).fa_name || '-'}</p>
+                                                                        <p className="text-[9px] text-primary/60 font-mono italic">{(p as any).fa_email || '-'}</p>
+                                                                    </td>
+                                                                    <td className="px-6 py-4">
+                                                                        <p className="text-[10px] text-white uppercase">{p.department}</p>
+                                                                        <p className="text-[9px] text-gray-500 uppercase">{p.year}</p>
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </motion.div>
                         ))}
 

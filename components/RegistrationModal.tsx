@@ -102,31 +102,42 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
       const regResult = await registrationResponse.json();
 
       if (!registrationResponse.ok) {
-        alert(regResult.error || 'Mobilization failed. Please check your data.');
+        setLoading(false);
+        if (registrationResponse.status === 409) {
+          alert('MOBILIZATION REVOKED: A squad name, operative email, phone, or RA-ID is already in use.');
+        } else {
+          alert(regResult.error || 'Mobilization failed. Please check your data.');
+        }
         return;
       }
 
-      // 2. Intelligence Report Generation (Success Path)
-      const intelResponse = await fetch('/api/intel', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: `${teamName} (Lead: ${leader.name}, Advisor: ${advisor.name})`,
-          faction
-        })
-      });
+      // 2. Intelligence Report Generation (Optional Path)
+      try {
+        const intelResponse = await fetch('/api/intel', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: `${teamName} (Lead: ${leader.name}, Advisor: ${advisor.name})`,
+            faction
+          })
+        });
 
-      const intelData = await intelResponse.json();
+        const intelData = await intelResponse.json();
 
-      if (!intelResponse.ok) {
-        throw new Error(intelData.error || 'Failed to generate intel.');
+        if (intelResponse.ok) {
+          onIntelGenerated(intelData.intel);
+        } else {
+          console.warn("Intel generation failed, but registration succeeded.");
+          onIntelGenerated("Uplink successful. Tactical briefing pending deployment.");
+        }
+      } catch (intelErr) {
+        console.error("Intel generation error:", intelErr);
+        onIntelGenerated("Uplink successful. Proceed to deployment area.");
       }
-
-      onIntelGenerated(intelData.intel);
 
     } catch (error) {
       console.error("Critical mission failure:", error);
-      alert('Network uplink lost. Check connection.');
+      alert('Internal transmission failure. Please retry.');
     } finally {
       setLoading(false);
     }

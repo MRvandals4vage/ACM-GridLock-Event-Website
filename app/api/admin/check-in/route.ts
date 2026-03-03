@@ -8,15 +8,19 @@ export async function POST(req: Request) {
 
     try {
         const body = await req.json();
-        const { teamId, secret } = body;
+        const { teamId, secret, teamName } = body;
 
-        // 1. Verify team and secret
+        // 1. Verify team and secret/name
         let query = supabase.from('teams').select('id, attendance_secret');
 
         if (teamId) {
             query = query.eq('id', teamId);
-        } else {
+        } else if (secret) {
             query = query.eq('attendance_secret', secret);
+        } else if (teamName) {
+            query = query.ilike('team_name', teamName);
+        } else {
+            return NextResponse.json({ error: 'Missing logic credentials' }, { status: 400 });
         }
 
         const { data: team, error: teamError } = await query.single();
@@ -25,7 +29,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Operative not found or invalid signature' }, { status: 404 });
         }
 
-        if (teamId && team.attendance_secret !== secret) {
+        if (teamId && secret && team.attendance_secret !== secret) {
             return NextResponse.json({ error: 'Invalid security clearance' }, { status: 403 });
         }
 

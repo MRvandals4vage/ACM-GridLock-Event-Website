@@ -9,7 +9,9 @@ CREATE TABLE teams (
     advisor_name text,
     advisor_email text,
     attendance_secret text DEFAULT encode(gen_random_bytes(16), 'hex'),
-    created_at timestamptz DEFAULT now()
+    created_at timestamptz DEFAULT now(),
+
+    CONSTRAINT unique_team_name UNIQUE (team_name)
 );
 
 -- 2. Create Participants table
@@ -30,7 +32,8 @@ CREATE TABLE participants (
 
     -- Constraints to prevent duplicate registrations across the whole event
     CONSTRAINT unique_participant_email UNIQUE (email),
-    CONSTRAINT unique_participant_reg_no UNIQUE (reg_no)
+    CONSTRAINT unique_participant_reg_no UNIQUE (reg_no),
+    CONSTRAINT unique_participant_phone UNIQUE (phone)
 );
 
 -- Indexing for performance

@@ -56,7 +56,12 @@ export async function POST(req: Request) {
             .select()
             .single();
 
-        if (teamError) throw teamError;
+        if (teamError) {
+            if (teamError.code === '23505') {
+                return NextResponse.json({ error: 'MOBILIZATION DENIED: Squad name already in use.' }, { status: 409 });
+            }
+            throw teamError;
+        }
 
         // 3. Prepare All Participants list (Leader + Members)
         const allParticipants = [
@@ -95,7 +100,7 @@ export async function POST(req: Request) {
             // If participant insertion fails (e.g. duplicate email), we should ideally rollback the team insert.
             if (participantsError.code === '23505') {
                 await supabase.from('teams').delete().eq('id', teamData.id);
-                return NextResponse.json({ error: 'Duplicate participant detected (Email or Reg No already registered)' }, { status: 409 });
+                return NextResponse.json({ error: 'MOBILIZATION DENIED: Operative communication, RA-ID, or Email already in use.' }, { status: 409 });
             }
             throw participantsError;
         }
