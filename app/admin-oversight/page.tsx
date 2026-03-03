@@ -143,24 +143,25 @@ export default function AdminOversight() {
                             Live Uplink Active
                         </span>
                         <span>Total Squads: {registrations.length}</span>
-                        <Link
-                            href="/admin-oversight/attendance"
-                            className="ml-4 px-4 py-1.5 bg-primary/20 text-primary border border-primary/30 rounded-full hover:bg-primary hover:text-background-dark transition-all text-[9px] font-bold"
-                        >
-                            GO TO ATTENDANCE
-                        </Link>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4 w-full md:w-96">
-                    <div className="relative w-full">
+                <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+                    <Link
+                        href="/admin-oversight/attendance"
+                        className="px-6 py-2.5 bg-primary text-background-dark font-display font-black text-[10px] tracking-[0.2em] rounded-full hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,229,255,0.4)] uppercase flex items-center gap-2"
+                    >
+                        <span className="material-icons text-sm">qr_code_scanner</span>
+                        Attendance Scan
+                    </Link>
+                    <div className="relative w-full md:w-80">
                         <span className="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-white/30 text-sm">search</span>
                         <input
                             type="text"
-                            placeholder="SEARCH SQUAD OR OPERATIVE..."
+                            placeholder="SEARCH SQUAD..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-12 pr-4 text-xs font-display tracking-wider outline-none focus:border-primary transition-all uppercase"
+                            className="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-12 pr-4 text-[10px] font-display tracking-wider outline-none focus:border-primary transition-all uppercase"
                         />
                     </div>
                 </div>
