@@ -8,6 +8,7 @@ CREATE TABLE teams (
     faction text NOT NULL,
     advisor_name text,
     advisor_email text,
+    attendance_secret text DEFAULT encode(gen_random_bytes(16), 'hex'),
     created_at timestamptz DEFAULT now()
 );
 
@@ -21,7 +22,10 @@ CREATE TABLE participants (
     phone text NOT NULL,
     department text,
     year text,
+    fa_name text,
+    fa_email text,
     is_leader boolean DEFAULT false,
+    attendance_checked_in boolean DEFAULT false,
     created_at timestamptz DEFAULT now(),
 
     -- Constraints to prevent duplicate registrations across the whole event

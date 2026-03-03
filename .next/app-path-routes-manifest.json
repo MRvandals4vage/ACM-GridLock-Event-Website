@@ -1,0 +1,9 @@
+{
+  "/api/admin/registrations/route": "/api/admin/registrations",
+  "/api/intel/route": "/api/intel",
+  "/api/admin/check-in/route": "/api/admin/check-in",
+  "/_not-found/page": "/_not-found",
+  "/api/register/route": "/api/register",
+  "/admin-oversight/page": "/admin-oversight",
+  "/page": "/"
+}

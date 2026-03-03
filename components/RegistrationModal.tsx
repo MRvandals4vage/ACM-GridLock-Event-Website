@@ -7,6 +7,8 @@ interface Member {
   phone: string;
   email: string;
   department: string;
+  faName: string;
+  faEmail: string;
 }
 
 interface RegistrationModalProps {
@@ -32,7 +34,9 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
     email: '',
     phone: '',
     department: '',
-    year: 'Select year'
+    year: 'Select year',
+    faName: '',
+    faEmail: ''
   });
 
   // Advisor Data
@@ -43,7 +47,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
 
   // Members Data
   const [members, setMembers] = useState<Member[]>([
-    { name: '', regNo: '', phone: '', email: '', department: '' }
+    { name: '', regNo: '', phone: '', email: '', department: '', faName: '', faEmail: '' }
   ]);
 
 
@@ -57,7 +61,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
 
   const addMember = () => {
     if (members.length < 3) {
-      setMembers([...members, { name: '', regNo: '', phone: '', email: '', department: '' }]);
+      setMembers([...members, { name: '', regNo: '', phone: '', email: '', department: '', faName: '', faEmail: '' }]);
     }
   };
 
@@ -87,6 +91,8 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
           leader_phone: leader.phone,
           leader_department: leader.department,
           leader_year: leader.year,
+          leader_fa_name: leader.faName,
+          leader_fa_email: leader.faEmail,
           advisor_name: advisor.name,
           advisor_email: advisor.email,
           members
@@ -141,7 +147,9 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
           emailRegex.test(leader.email) &&
           phoneRegex.test(leader.phone) &&
           leader.department.trim().length > 0 &&
-          leader.year !== 'Select year'
+          leader.year !== 'Select year' &&
+          leader.faName.trim().length > 0 &&
+          emailRegex.test(leader.faEmail)
         );
       case 'ADVISOR':
         return (
@@ -154,7 +162,9 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
           regNoRegex.test(m.regNo) &&
           phoneRegex.test(m.phone) &&
           emailRegex.test(m.email) &&
-          m.department.trim().length > 0
+          m.department.trim().length > 0 &&
+          m.faName.trim().length > 0 &&
+          emailRegex.test(m.faEmail)
         );
       case 'VERIFY':
         return true;
@@ -295,12 +305,15 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
                       { label: 'Register Number', key: 'regNo' },
                       { label: 'Phone Number', key: 'phone', type: 'tel' },
                       { label: 'Email ID', key: 'email', type: 'email' },
-                      { label: 'Department', key: 'department' }
+                      { label: 'Department', key: 'department' },
+                      { label: 'FA Name', key: 'faName' },
+                      { label: 'FA Email ID', key: 'faEmail', type: 'email' }
                     ].map((field) => (
                       <div key={field.key} className="space-y-1 relative group">
                         <label className="text-[9px] font-display text-primary/40 uppercase tracking-widest pl-1">{field.label}</label>
                         <input
                           required
+                          type={(field as any).type || 'text'}
                           value={(leader as any)[field.key]}
                           onChange={(e) => setLeader({ ...leader, [field.key]: e.target.value })}
                           className="w-full bg-transparent border-b border-white/10 text-white p-2 focus:border-primary outline-none font-body transition-all"
@@ -393,7 +406,9 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
                           <input placeholder="REG NUMBER" value={member.regNo} onChange={(e) => handleMemberChange(i, 'regNo', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white" />
                           <input placeholder="PHONE" value={member.phone} onChange={(e) => handleMemberChange(i, 'phone', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white" />
                           <input placeholder="EMAIL" value={member.email} onChange={(e) => handleMemberChange(i, 'email', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white" />
-                          <input placeholder="DEPT" value={member.department} onChange={(e) => handleMemberChange(i, 'department', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white md:col-span-2" />
+                          <input placeholder="DEPT" value={member.department} onChange={(e) => handleMemberChange(i, 'department', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white" />
+                          <input placeholder="FA NAME" value={member.faName} onChange={(e) => handleMemberChange(i, 'faName', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white" />
+                          <input placeholder="FA EMAIL" value={member.faEmail} onChange={(e) => handleMemberChange(i, 'faEmail', e.target.value)} className="bg-transparent border-b border-white/5 text-sm p-2 outline-none focus:border-primary transition-all font-body text-white md:col-span-2" />
                         </div>
                       </motion.div>
                     ))}

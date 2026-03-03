@@ -1,3 +1,9 @@
 {
+  "/api/admin/registrations/route": "app/api/admin/registrations/route.js",
+  "/api/intel/route": "app/api/intel/route.js",
+  "/api/admin/check-in/route": "app/api/admin/check-in/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/register/route": "app/api/register/route.js",
+  "/admin-oversight/page": "app/admin-oversight/page.js",
   "/page": "app/page.js"
 }
