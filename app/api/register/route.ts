@@ -67,16 +67,20 @@ export async function POST(req: Request) {
                 phone: leader_phone,
                 department: leader_department,
                 year: leader_year,
+                fa_name: body.leader_fa_name,  // Note: These need to be passed from frontend
+                fa_email: body.leader_fa_email,
                 is_leader: true
             },
             ...members.map((m: any) => ({
                 team_id: teamData.id,
                 name: m.name,
-                reg_no: m.regNo, // Correcting camelCase from frontend if needed
+                reg_no: m.regNo,
                 email: m.email,
                 phone: m.phone,
                 department: m.department,
                 year: m.year,
+                fa_name: m.faName,
+                fa_email: m.faEmail,
                 is_leader: false
             }))
         ];
