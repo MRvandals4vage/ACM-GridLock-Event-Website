@@ -8,12 +8,12 @@ import { NavbarComponent } from '@/components/NavbarComponent';
 import AboutSection from '@/components/AboutSection';
 import MissionStructure from '@/components/MissionStructure';
 import TimelineSection from '@/components/TimelineSection';
-import IntroSequence from '@/components/IntroSequence';
+
 
 export default function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [intelligence, setIntelligence] = useState<string | null>(null);
-    const [showIntro, setShowIntro] = useState(true);
+
 
     const handleRegisterClick = () => {
         setIsModalOpen(true);
@@ -24,22 +24,15 @@ export default function Home() {
         setIsModalOpen(false);
     };
 
-    const handleIntroComplete = () => {
-        setShowIntro(false);
-    };
+
 
     return (
         <main className="relative min-h-screen bg-background-dark font-body select-none">
-            {/* Intro Sequence */}
-            {showIntro && <IntroSequence onComplete={handleIntroComplete} />}
+
 
             {/* Main App with fade-in */}
             <div
-                className="min-h-screen relative transition-opacity duration-[400ms]"
-                style={{
-                    opacity: showIntro ? 0 : 1,
-                    transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'
-                }}
+                className="min-h-screen relative"
             >
                 {/* Background Stardust Overlay */}
                 <div className="fixed inset-0 pointer-events-none opacity-20 bg-[radial-gradient(white_1px,transparent_1px)] bg-[size:20px_20px] z-10"></div>
