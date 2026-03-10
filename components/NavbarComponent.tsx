@@ -23,12 +23,14 @@ export function NavbarComponent({ onRegister }: NavbarComponentProps) {
             link: "#home",
         },
         {
-            name: "Timeline",
-            link: "#timeline",
-        },
-        {
             name: "Intel",
             link: "#intel",
+
+        },
+        {
+            name: "Timeline",
+            link: "#timeline",
+
         },
     ];
 
@@ -61,16 +63,18 @@ export function NavbarComponent({ onRegister }: NavbarComponentProps) {
                     isOpen={isMobileMenuOpen}
                     onClose={() => setIsMobileMenuOpen(false)}
                 >
-                    {navItems.map((item, idx) => (
-                        <a
-                            key={`mobile-link-${idx}`}
-                            href={item.link}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className="relative text-gray-300 hover:text-primary transition-colors font-display tracking-widest uppercase text-sm"
-                        >
-                            <span className="block">{item.name}</span>
-                        </a>
-                    ))}
+                    <div className="flex flex-col items-center gap-8 py-4">
+                        {navItems.map((item, idx) => (
+                            <a
+                                key={`mobile-link-${idx}`}
+                                href={item.link}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="relative text-gray-300 hover:text-primary transition-colors font-display tracking-widest uppercase text-lg"
+                            >
+                                <span className="block">{item.name}</span>
+                            </a>
+                        ))}
+                    </div>
                     <div className="flex w-full flex-col gap-4">
                         <NavbarButton
                             onClick={() => {

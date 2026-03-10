@@ -26,10 +26,10 @@ export const NavBody = ({ children, className }: { children: React.ReactNode; cl
     return (
         <div
             className={cn(
-                "hidden md:flex items-center justify-between px-8 py-4 mt-4 rounded-3xl transition-all duration-700 ease-[0.16, 1, 0.3, 1]",
-                "bg-black/40 backdrop-blur-xl border border-white/10",
-                "shadow-[0_8px_32px_0_rgba(0,229,255,0.15)]",
-                isScrolled ? "mx-12 md:mx-32 lg:mx-[20vw] py-2 px-12" : "mx-4 py-4 px-8",
+                "hidden md:flex items-center justify-between px-8 py-4 mt-6 rounded-[2rem] transition-all duration-700 ease-[0.16, 1, 0.3, 1]",
+                "bg-black/60 backdrop-blur-xl border border-white/10",
+                "shadow-[0_8px_32px_0_rgba(0,229,255,0.1)]",
+                isScrolled ? "mx-4 md:mx-12 lg:mx-[15vw] py-2 px-8 mt-2" : "mx-4 py-4 px-8 mt-6",
                 className
             )}
         >
@@ -57,11 +57,18 @@ export const NavItems = ({ items, className }: { items: { name: string; link: st
 
 export const NavbarLogo = ({ className }: { className?: string }) => {
     return (
-        <div className={cn("flex items-center gap-2", className)}>
-            <span className="font-display text-lg font-bold tracking-wider text-white">
+        <a href="#home" className={cn("flex items-center gap-3 group", className)}>
+            <div className="relative w-10 h-10 md:w-12 md:h-12 flex-shrink-0">
+                <img
+                    src="/assets/acm-logo.png"
+                    alt="ACM SIGCHI SRM"
+                    className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(0,229,255,0.3)] group-hover:drop-shadow-[0_0_12px_rgba(0,229,255,0.5)] transition-all duration-300"
+                />
+            </div>
+            <span className="font-display text-sm md:text-lg font-bold tracking-wider text-white group-hover:text-primary transition-colors">
                 ACM SIGCHI
             </span>
-        </div>
+        </a>
     );
 };
 
@@ -170,10 +177,10 @@ export const MobileNavMenu = ({
             {/* Menu */}
             <div
                 className={cn(
-                    "fixed top-20 left-4 right-4 rounded-3xl overflow-hidden transition-all duration-300 z-50",
-                    "bg-black/40 backdrop-blur-xl border border-white/10",
-                    "shadow-[0_8px_32px_0_rgba(0,229,255,0.15)]",
-                    isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none",
+                    "fixed top-24 left-4 right-4 rounded-3xl overflow-hidden transition-all duration-500 z-50",
+                    "bg-black/80 backdrop-blur-2xl border border-white/10",
+                    "shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_20px_rgba(0,229,255,0.1)]",
+                    isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8 pointer-events-none",
                     className
                 )}
             >
