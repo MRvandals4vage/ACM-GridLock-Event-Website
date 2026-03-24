@@ -50,7 +50,7 @@ const AboutSection: React.FC = () => {
                                     GRIDLOCK is a multi-stage technical adventure challenge that simulates restoring a corrupted digital grid system across campus.
                                 </p>
                                 <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
-                                    Teams must decode, calculate, and navigate through three power nodes before executing a final GPS-based precision capture at Vendhar Square.
+                                    Teams must decode, calculate, and navigate through three power sectors before executing a final campus CTF hunt.
                                 </p>
 
                                 <ul className="space-y-4 pt-4">
@@ -85,9 +85,10 @@ const AboutSection: React.FC = () => {
                             <div className="space-y-6">
                                 {[
                                     { label: 'Organized by', value: 'ACM SIGCHI Student Chapter – SRM' },
+                                    { label: 'Venue', value: 'TP413' },
                                     { label: 'Theme', value: 'Power Rangers' },
-                                    { label: 'Date', value: '30 March' },
-                                    { label: 'Time', value: '9:00 AM – 4:00 PM' },
+                                    { label: 'Date', value: '2nd April 2026' },
+                                    { label: 'Time', value: '9:00 AM – 5:00 PM' },
                                     { label: 'Team Size', value: '3–4 Members' },
                                     { label: 'Winners', value: 'Top 3 Teams' }
                                 ].map((detail, i) => (

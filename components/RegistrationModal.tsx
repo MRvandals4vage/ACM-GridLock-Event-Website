@@ -341,8 +341,6 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose, 
                         <option className="bg-gray-900 border-none">Select year</option>
                         <option className="bg-gray-900 border-none">1st Year</option>
                         <option className="bg-gray-900 border-none">2nd Year</option>
-                        <option className="bg-gray-900 border-none">3rd Year</option>
-                        <option className="bg-gray-900 border-none">4th Year</option>
                       </select>
                     </div>
                   </div>

@@ -136,10 +136,10 @@ const CTFSection: React.FC = () => {
                     <div className="text-center space-y-4">
                         <div className="h-1 w-20 bg-red-500 mx-auto mb-8"></div>
                         <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white font-orbitron tracking-tight">
-                            OFFLINE CAPTURE THE FLAG
+                            CAMPUS CTF HUNT
                         </h2>
                         <p className="text-2xl md:text-3xl text-red-400 font-light tracking-wide">
-                            Break. Decrypt. Extract.
+                            Solve. Decode. Extract.
                         </p>
                     </div>
 
@@ -149,14 +149,14 @@ const CTFSection: React.FC = () => {
                         <div className="lg:col-span-2 backdrop-blur-md bg-white/5 border border-red-500/20 rounded-lg p-8 shadow-2xl hover:border-red-500/40 transition-colors duration-300">
                             <div className="space-y-4 text-gray-300">
                                 <p className="text-lg leading-relaxed">
-                                    A <span className="text-white font-semibold">live, on-ground competition</span> where teams face timed cybersecurity challenges in a LAN-based environment.
+                                    A <span className="text-white font-semibold">live, campus-wide competition</span> where teams face timed riddle-solving challenges.
                                 </p>
                                 <p className="text-lg leading-relaxed">
-                                    Compete on a <span className="text-red-400 font-semibold">real-time leaderboard</span> as you extract flags and submit in the correct format.
+                                    Compete on a <span className="text-red-400 font-semibold">real-time leaderboard</span> as you solve riddles to extract keys.
                                 </p>
                                 <div className="pt-4 border-t border-white/10 mt-6">
                                     <p className="text-sm text-gray-400 italic">
-                                        Flag format submission required for validation
+                                        Key submission format required for validation
                                     </p>
                                 </div>
                             </div>
@@ -169,8 +169,8 @@ const CTFSection: React.FC = () => {
                             </h3>
                             <div className="space-y-4">
                                 {[
-                                    { label: 'Duration', value: '4 Hours' },
-                                    { label: 'Format', value: 'Offline LAN' },
+                                    { label: 'Duration', value: '3.5 Hours' },
+                                    { label: 'Format', value: 'Campus Hunt' },
                                     { label: 'Team Size', value: '3–4' },
                                     { label: 'Leaderboard', value: 'Live' }
                                 ].map((stat, index) => (
