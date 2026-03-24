@@ -13,6 +13,7 @@ interface Participant {
     department: string;
     year: string;
     is_leader: boolean;
+    attendance_checked_in?: boolean;
 }
 
 interface Team {
@@ -85,11 +86,19 @@ export default function AdminOversight() {
     };
 
     const [expandedTeamId, setExpandedTeamId] = useState<string | null>(null);
+    const [filterMode, setFilterMode] = useState<'ALL' | 'CHECKED_IN' | 'PENDING'>('ALL');
 
-    const filteredTeams = registrations.filter(team =>
-        team.team_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        team.participants.some(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
+    const filteredTeams = registrations.filter(team => {
+        const matchesSearch = team.team_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            team.participants.some(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
+            
+        const isCheckedIn = team.participants.some(p => p.attendance_checked_in);
+        
+        if (filterMode === 'CHECKED_IN' && !isCheckedIn) return false;
+        if (filterMode === 'PENDING' && isCheckedIn) return false;
+        
+        return matchesSearch;
+    });
 
     if (!isAuthorized) {
         return (
@@ -149,6 +158,11 @@ export default function AdminOversight() {
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+                    <div className="flex bg-black/40 p-1 rounded-full border border-white/5">
+                        <button onClick={() => setFilterMode('ALL')} className={`px-4 py-1.5 text-[10px] font-bold uppercase rounded-full transition-all ${filterMode === 'ALL' ? 'bg-primary text-background-dark' : 'text-gray-500 hover:text-white'}`}>All</button>
+                        <button onClick={() => setFilterMode('CHECKED_IN')} className={`px-4 py-1.5 text-[10px] font-bold uppercase rounded-full transition-all ${filterMode === 'CHECKED_IN' ? 'bg-green-500 text-background-dark' : 'text-gray-500 hover:text-white'}`}>Checked In</button>
+                        <button onClick={() => setFilterMode('PENDING')} className={`px-4 py-1.5 text-[10px] font-bold uppercase rounded-full transition-all ${filterMode === 'PENDING' ? 'bg-red-500 text-background-dark' : 'text-gray-500 hover:text-white'}`}>Pending</button>
+                    </div>
                     <Link
                         href="/admin-oversight/attendance"
                         className="px-6 py-2.5 bg-primary text-background-dark font-display font-black text-[10px] tracking-[0.2em] rounded-full hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,229,255,0.4)] uppercase flex items-center gap-2"
@@ -199,7 +213,14 @@ export default function AdminOversight() {
                                             {team.faction === 'RANGER' ? 'R' : 'V'}
                                         </div>
                                         <div>
-                                            <h2 className="text-xl font-display font-black italic tracking-tight uppercase leading-none group-hover:text-primary transition-colors">{team.team_name}</h2>
+                                            <div className="flex items-center gap-3">
+                                                <h2 className="text-xl font-display font-black italic tracking-tight uppercase leading-none group-hover:text-primary transition-colors">{team.team_name}</h2>
+                                                {team.participants.some(p => p.attendance_checked_in) ? (
+                                                    <span className="px-2 py-0.5 rounded border border-green-500/30 bg-green-500/10 text-[8px] text-green-400 font-bold tracking-widest uppercase mt-1">CHECKED IN</span>
+                                                ) : (
+                                                    <span className="px-2 py-0.5 rounded border border-red-500/30 bg-red-500/10 text-[8px] text-red-400 font-bold tracking-widest uppercase mt-1">PENDING</span>
+                                                )}
+                                            </div>
                                             <p className="text-[8px] text-gray-500 font-display tracking-widest uppercase mt-1 italic">
                                                 Operatives: {team.participants.length} // Deployment: {new Date(team.created_at).toLocaleDateString()}
                                             </p>
