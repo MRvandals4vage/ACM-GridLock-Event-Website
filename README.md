@@ -15,7 +15,7 @@ GRIDLOCK is designed as a two-phase technical engagement model.
 Phase 1 — Codeathon (Elimination Round)
 
 Duration: 2 Hours 15 Minutes
-Mode: Team-based (3–4 members)
+Mode: Team-based (2–4 members)
 
 Participants solve a curated set of technical challenges, including:
 	•	Algorithmic programming problems

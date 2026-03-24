@@ -171,7 +171,7 @@ const CTFSection: React.FC = () => {
                                 {[
                                     { label: 'Duration', value: '3.5 Hours' },
                                     { label: 'Format', value: 'Campus Hunt' },
-                                    { label: 'Team Size', value: '3–4' },
+                                    { label: 'Team Size', value: '2–4' },
                                     { label: 'Leaderboard', value: 'Live' }
                                 ].map((stat, index) => (
                                     <motion.div

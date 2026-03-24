@@ -89,7 +89,7 @@ const AboutSection: React.FC = () => {
                                     { label: 'Theme', value: 'Power Rangers' },
                                     { label: 'Date', value: '2nd April 2026' },
                                     { label: 'Time', value: '9:00 AM – 5:00 PM' },
-                                    { label: 'Team Size', value: '3–4 Members' },
+                                    { label: 'Team Size', value: '2–4 Members' },
                                     { label: 'Winners', value: 'Top 3 Teams' }
                                 ].map((detail, i) => (
                                     <div key={i} className="flex flex-col md:flex-row md:items-center justify-between border-b border-white/5 pb-3">
