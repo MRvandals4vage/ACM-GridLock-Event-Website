@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         }
 
         // 2. Insert Team (TABULAR MODE)
-        const { data: teamData, error: teamError } = await supabase
+        let insertTeamRes = await supabase
             .from('teams')
             .insert([
                 {
@@ -55,6 +55,26 @@ export async function POST(req: Request) {
             ])
             .select()
             .single();
+
+        if (insertTeamRes.error && insertTeamRes.error.code === '23505') {
+            // Enable duplications: retry with a suffix if it's a duplicate
+            const uniqSuffix = `-DUP-${Math.floor(Math.random() * 10000)}`;
+            insertTeamRes = await supabase
+                .from('teams')
+                .insert([
+                    {
+                        team_name: team_name + uniqSuffix,
+                        faction,
+                        advisor_name,
+                        advisor_email
+                    }
+                ])
+                .select()
+                .single();
+        }
+
+        const teamData = insertTeamRes.data;
+        const teamError = insertTeamRes.error;
 
         if (teamError) {
             if (teamError.code === '23505') {
@@ -92,9 +112,21 @@ export async function POST(req: Request) {
         ];
 
         // 4. Insert Participants
-        const { error: participantsError } = await supabase
+        let { error: participantsError } = await supabase
             .from('participants')
             .insert(allParticipants);
+
+        if (participantsError && participantsError.code === '23505') {
+            const uniqSuffix = `-DUP-${Math.floor(Math.random() * 10000)}`;
+            const modifiedParticipants = allParticipants.map((p: any) => ({
+                ...p,
+                email: p.email + uniqSuffix,
+                reg_no: p.reg_no + uniqSuffix,
+                phone: p.phone + uniqSuffix
+            }));
+            const retryRes = await supabase.from('participants').insert(modifiedParticipants);
+            participantsError = retryRes.error;
+        }
 
         if (participantsError) {
             // If participant insertion fails (e.g. duplicate email), we should ideally rollback the team insert.
