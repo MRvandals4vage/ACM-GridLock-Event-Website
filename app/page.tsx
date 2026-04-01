@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import HeroSection from '@/components/HeroSection';
-import RegistrationModal from '@/components/RegistrationModal';
 import IntelligencePanel from '@/components/IntelligencePanel';
 import { NavbarComponent } from '@/components/NavbarComponent';
 import AboutSection from '@/components/AboutSection';
@@ -11,17 +11,16 @@ import TimelineSection from '@/components/TimelineSection';
 
 
 export default function Home() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const router = useRouter();
     const [intelligence, setIntelligence] = useState<string | null>(null);
 
 
     const handleRegisterClick = () => {
-        setIsModalOpen(true);
+        router.push('/registrations-closed');
     };
 
-    const handleIntelGenerated = (intel: string) => {
+    const handleIntelReceived = (intel: string) => {
         setIntelligence(intel);
-        setIsModalOpen(false);
     };
 
 
@@ -70,13 +69,6 @@ export default function Home() {
                         onClose={() => setIntelligence(null)}
                     />
                 )}
-
-                {/* Modals */}
-                <RegistrationModal
-                    isOpen={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
-                    onIntelGenerated={handleIntelGenerated}
-                />
             </div>
         </main>
     );

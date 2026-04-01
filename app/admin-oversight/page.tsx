@@ -35,7 +35,7 @@ export default function AdminOversight() {
     const [searchTerm, setSearchTerm] = useState('');
 
     // Tactical Authorization (Simple but effective for internal use)
-    const AUTH_PASSCODE = 'GRIDLOCK_2026_OVERSEER';
+    const AUTH_PASSCODE = 'GRIDLOCK_OVERSEER';
 
     const handleAuth = (e: React.FormEvent) => {
         e.preventDefault();
@@ -91,12 +91,12 @@ export default function AdminOversight() {
     const filteredTeams = registrations.filter(team => {
         const matchesSearch = team.team_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             team.participants.some(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
-            
+
         const isCheckedIn = team.participants.some(p => p.attendance_checked_in);
-        
+
         if (filterMode === 'CHECKED_IN' && !isCheckedIn) return false;
         if (filterMode === 'PENDING' && isCheckedIn) return false;
-        
+
         return matchesSearch;
     });
 
