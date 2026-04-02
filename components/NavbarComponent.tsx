@@ -43,6 +43,11 @@ export function NavbarComponent({ onRegister }: NavbarComponentProps) {
                 <NavbarLogo />
                 <NavItems items={navItems} />
                 <div className="flex items-center gap-4">
+                    <a href="https://www.hackerrank.com/gridlock-round2" target="_blank" rel="noopener noreferrer">
+                        <NavbarButton variant="secondary">
+                            Round 2
+                        </NavbarButton>
+                    </a>
                     <NavbarButton variant="primary" onClick={onRegister}>
                         Register for Intel
                     </NavbarButton>
@@ -76,6 +81,11 @@ export function NavbarComponent({ onRegister }: NavbarComponentProps) {
                         ))}
                     </div>
                     <div className="flex w-full flex-col gap-4">
+                        <a href="https://www.hackerrank.com/gridlock-round2" target="_blank" rel="noopener noreferrer" className="w-full">
+                            <NavbarButton variant="secondary" className="w-full">
+                                Round 2
+                            </NavbarButton>
+                        </a>
                         <NavbarButton
                             onClick={() => {
                                 setIsMobileMenuOpen(false);
