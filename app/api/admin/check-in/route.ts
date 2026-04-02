@@ -13,12 +13,12 @@ export async function POST(req: Request) {
         // 1. Verify team and secret/name
         let query = supabase.from('teams').select('id, attendance_secret');
 
-        if (teamId) {
-            query = query.eq('id', teamId);
-        } else if (secret) {
-            query = query.eq('attendance_secret', secret);
-        } else if (teamName) {
-            query = query.ilike('team_name', teamName);
+        if (teamId?.trim()) {
+            query = query.eq('id', teamId.trim());
+        } else if (secret?.trim()) {
+            query = query.eq('attendance_secret', secret.trim());
+        } else if (teamName?.trim()) {
+            query = query.ilike('team_name', teamName.trim());
         } else {
             return NextResponse.json({ error: 'Missing logic credentials' }, { status: 400 });
         }
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Operative not found or invalid signature' }, { status: 404 });
         }
 
-        if (teamId && secret && team.attendance_secret !== secret) {
+        if (teamId?.trim() && secret?.trim() && team.attendance_secret !== secret.trim()) {
             return NextResponse.json({ error: 'Invalid security clearance' }, { status: 403 });
         }
 

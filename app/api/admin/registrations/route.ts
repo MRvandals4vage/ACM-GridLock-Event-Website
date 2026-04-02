@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET(req: Request) {
     if (!supabase) {
         return NextResponse.json({ error: 'Database connection not established' }, { status: 503 });
